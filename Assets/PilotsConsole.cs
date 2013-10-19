@@ -33,8 +33,10 @@ public class PilotsConsole : MonoBehaviour {
 				player.used = !player.used;
 				if(used)
 					cameraFollow.ChangeCam(camAnchor, camSize);
-				else
+				else {
 					cameraFollow.Reset();
+					ship.Move(Vector3.zero);
+				}
 			}
 		}
 		if(used) {
@@ -55,12 +57,14 @@ public class PilotsConsole : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		if(playerNear) {
-			GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");
+		if(!used) {
+			if(playerNear) {
+				GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");
+			}
 		}
 		
 		if(used)  {
-			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "Press 'LMB' to fire\n'WASD' to move");
+			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "'WASD' to move");
 		}
 	}
 }
