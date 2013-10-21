@@ -17,10 +17,10 @@ public class tesmove : MonoBehaviour {
 		    Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		    float speed = 5;
 		    transform.Translate(speed * moveDir * Time.deltaTime);
-			//if(Vector3.Distance(transform.position, lastPosition) > minimumMovement) {
-			//	lastPosition = transform.position;
-			//	networkView.RPC("SetPosition", RPCMode.Others, transform.position);
-			//}
+//			if(Vector3.Distance(transform.position, lastPosition) > minimumMovement) {
+//				lastPosition = transform.position;
+//				networkView.RPC("SetPosition", RPCMode.Others, transform.position);
+//			}
 		}
 	}
 	
