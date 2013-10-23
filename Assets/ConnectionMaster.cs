@@ -6,14 +6,6 @@ public class ConnectionMaster : MonoBehaviour {
 	public string connectionIP = "127.0.0.1";
 	public int connectionPort = 25001;
 	
-	void Start () {
-	
-	}
-	
-	void Update () {
-	
-	}
-	
 	void OnGUI() {
 		if(Network.peerType == NetworkPeerType.Disconnected) {
 			GUI.Label(new Rect(10.0f, 10.0f, 200.0f, 20.0f), "Status: Disconnected");
