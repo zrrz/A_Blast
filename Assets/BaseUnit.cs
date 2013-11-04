@@ -68,15 +68,42 @@ public class BaseUnit : MonoBehaviour {
 		m_currPos = transform.position;
 		m_currRot = transform.rotation.eulerAngles;
 		m_attackRate = 1.0f ;
-		m_rotationSpeed = 10.0f ;
+		m_rotationSpeed = 2.0f ;
 
         //StartCoroutine("IdleRoutine");
 	}
 	
 	// Update is called once per frame
-	public virtual void Update ()
+	public void Update ()
 	{
-        // The Update logic is set strictly for Ability logic only (CD's, Activation, etc) and flocking coroutines?
+		
+		//turn left
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			//transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,-50,0), m_rotationSpeed * Time.deltaTime);
+			rigidbody.AddRelativeTorque(0,-200,0);
+		}
+		
+		//turn right
+		if(Input.GetKeyDown(KeyCode.D))
+		{
+			//transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,50,0), m_rotationSpeed * Time.deltaTime);
+			rigidbody.AddRelativeTorque(0,200,0);
+		}
+		
+		//move forward
+		if(Input.GetKeyDown(KeyCode.W))
+		{
+			rigidbody.AddRelativeForce(0,0,300);	
+		}
+		
+		//move backward
+		if(Input.GetKeyDown(KeyCode.S))
+		{
+			rigidbody.AddRelativeForce(0,0,-300);
+		}
+		
+        // Ability cool downs
         if (m_isAbilityActive)
         {
             m_abilityDurationTimer -= Time.deltaTime;
@@ -148,6 +175,8 @@ public class BaseUnit : MonoBehaviour {
 		// unit will fly like superman if we turn this on, is this intended??? - Seth B
 		//transform.rotation = Quaternion.Euler(new Vector3(270, transform.rotation.eulerAngles.y , 0));
 	}
+	
+	//public virtual void TurnLeft(
 	
 	/*
 	 * Added this function to replace any m_health -= var we had on scripts
