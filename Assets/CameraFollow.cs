@@ -6,48 +6,43 @@ public class CameraFollow : MonoBehaviour {
 	public float startSize;
 	
 	public Transform player;
-	public Transform ship;
+	
+	public Transform InsideShip;
+	public Transform OutsideShip;
 	
 	Transform thisTransform;
+	Transform outsideCamTransform;
 	
 	Camera thisCamera;
-	
-	Vector3 playeroffset;
-	Vector3	ShipOffset;
+	public Camera outsideCamera;
 	
 	Transform target;
 	
 	float targetSize;
 	
 	void Start () {
+		outsideCamTransform = outsideCamera.transform;
+		if(InsideShip == null)
+			InsideShip = GameObject.Find("ShipDeck").transform;
+		if(OutsideShip == null)
+			OutsideShip = GameObject.Find("ShipCraft").transform;
+		
 		thisCamera = camera;
 		thisTransform = transform;
 		if(player == null)
 			player = GameObject.Find("Player").transform;
-		if(ship == null)
-			ship = GameObject.Find("ship3Model").transform;
 		Reset();
-		
-		playeroffset.Set(0,10,-3);
-		ShipOffset.Set (0,50,-18);
 	}
 	
 	void Update () {
-		if(player.GetComponent<PlayerMove>().UsingDevice)
-		{
-			thisTransform.position = Vector3.Lerp(thisTransform.position, ship.position + ShipOffset, Time.deltaTime*4.0f);
-		}
-		else
-		{
-			thisTransform.position = Vector3.Lerp(thisTransform.position, player.position + playeroffset, Time.deltaTime*4.0f);
-		}
+		thisTransform.position = Vector3.Lerp(thisTransform.position, target.position + (Vector3.up*20.0f), Time.deltaTime*3.0f);
+	//	if(Mathf.Abs(thisCamera.orthographicSize - targetSize) > 0.1f) {
+	//		thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize)*0.1f;
+	//	}
+		Vector3 offset = thisTransform.position - InsideShip.position;
+		outsideCamTransform.position = OutsideShip.position + offset;
 		
-		/*
-		if(Mathf.Abs(thisCamera.orthographicSize - targetSize) > 0.1f) {
-			thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize)*0.1f;
-			
-		}
-		*/
+		thisTransform.eulerAngles = new Vector3(90.0f, -OutsideShip.eulerAngles.y, 0.0f);
 	}
 	
 	public void ChangeCam(Transform setTarget, float setSize) {
