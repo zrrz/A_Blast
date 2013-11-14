@@ -30,7 +30,7 @@ public class PilotsConsole : MonoBehaviour {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.used = !player.used;
+				player.UsingDevice = !player.UsingDevice;
 				if(used)
 					cameraFollow.ChangeCam(camAnchor, camSize);
 				else {

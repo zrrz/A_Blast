@@ -7,7 +7,7 @@ public class PlayerMove : MonoBehaviour {
 	
 	//Transform thisTransform;
 	
-	public bool used = true;
+	public bool UsingDevice = false;
 	
 	public float moveSpeed = 5.0f;
 	
@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(used) {
+		if(!UsingDevice) {
 			float speedMod = (input.shift == false) ? 1.0f : sprintSpeed;
 			characterController.Move(input.dir * (moveSpeed + speedMod) * Time.deltaTime);
 			//thisTransform.position += input.dir * moveSpeed * Time.deltaTime;
@@ -30,7 +30,7 @@ public class PlayerMove : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		if(used)  {
+		if(!UsingDevice)  {
 			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "Press 'shift' to sprint");
 		}
 	}

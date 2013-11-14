@@ -22,7 +22,7 @@ public class Turret : MonoBehaviour {
 	
 	CameraFollow cameraFollow;
 	
-	public Vector3 camOffset = new Vector3(5.0f, 18.0f, 0.0f);
+	public Vector3 camOffset = new Vector3(5.0f, 13.0f, 0.0f);
 	
 	public float maxRotation, minRotation;
 	
@@ -34,19 +34,27 @@ public class Turret : MonoBehaviour {
 		thisTransform = transform;
 		player = GameObject.Find("Player").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
+		
 		if(shootPoint == null)
 			shootPoint = thisTransform.FindChild("shootPoint");
+			
 	}
 	
 	void Update () {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.used = !player.used;
+				player.UsingDevice = !player.UsingDevice;
 				if(used)
+				{
 					cameraFollow.ChangeCam(camAnchor, camSize);
+					Debug.Log ("GunTurret Entered");
+				}
 				else
+				{
 					cameraFollow.Reset();
+					Debug.Log ("GunTurret Exited");
+				}
 			}
 		}
 		
