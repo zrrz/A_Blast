@@ -10,6 +10,8 @@ public class AsteroidSpawning : MonoBehaviour {
 	public GameObject endBound;
 	public List<GameObject> asteroidList;
 	public GameObject currentAsteroid;
+	public int bullshit = 0;
+	public float startGap = 10.0f;
 	
 	public float asteroidSpeedMin;
 	public float asteroidSpeedMax;
@@ -25,13 +27,17 @@ public class AsteroidSpawning : MonoBehaviour {
 			asteroid.SetActive(false);
 		}
 		
-		FireAsteroid();
+		//FireAsteroid();
 		//StartCoroutine("FireAsteroid");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(bullshit < asteroidList.Count)
+		{
+			FireAsteroid();
+			bullshit++;
+		}
 		
 	}
 	
@@ -42,16 +48,16 @@ public class AsteroidSpawning : MonoBehaviour {
 		float tempX;
 		float tempZ;
 		
-		if(Time.time % 2 == 0)
+		if(Random.Range(1, 10) % 2 == 0)
 		{
 			CurrSide = leftBound;
-			tempX = CurrSide.transform.position.x - 20;
+			tempX = CurrSide.transform.position.x - startGap;
 			
 		}
 		else
 		{
 			CurrSide = rightBound;
-			tempX = CurrSide.transform.position.x + 20;
+			tempX = CurrSide.transform.position.x + startGap;
 		}
 		
 		tempZ = Random.Range(startBound.transform.position.z,endBound.transform.position.z);
@@ -69,7 +75,17 @@ public class AsteroidSpawning : MonoBehaviour {
 		tempX = Random.Range(asteroidSpeedMin, asteroidSpeedMax);
 		tempZ = Random.Range(startBound.transform.position.z, endBound.transform.position.z);
 		
-		newVelocity = new Vector3(tempX, 0, tempZ);
+		newVelocity = new Vector3(0, 0, tempZ);
+		newVelocity.Normalize();
+		
+		if(currentAsteroid.transform.position.x > rightBound.transform.position.x)
+		{
+			newVelocity.x = -tempX;
+		}
+		else if(currentAsteroid.transform.position.x < leftBound.transform.position.x)
+		{
+			newVelocity.x = tempX;
+		}
 		
 		return newVelocity;
 	}
@@ -80,10 +96,9 @@ public class AsteroidSpawning : MonoBehaviour {
 		
 		while(currentAsteroid == null)
 		{
-			if(asteroidList[i].rigidbody.velocity == Vector3.zero)
+			if(asteroidList[i].activeSelf == false)
 			{
 				currentAsteroid = asteroidList[i];
-				Debug.Log ("Found obj");
 			}
 			i++;
 		}
@@ -97,9 +112,9 @@ public class AsteroidSpawning : MonoBehaviour {
 		{
 			currentAsteroid.SetActive(true);
 			Vector3 tempPos = GetRandomFirePos();
-			//Vector3 tempVel = GetRandomFireVel();
 			currentAsteroid.transform.position = tempPos;
-			//currentAsteroid.rigidbody.velocity = tempVel;
+			Vector3 tempVel = GetRandomFireVel(currentAsteroid);
+			currentAsteroid.rigidbody.velocity = tempVel;
 			currentAsteroid = null;
 		}
 	}
