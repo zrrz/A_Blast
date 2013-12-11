@@ -1,31 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PilotsConsole : MonoBehaviour {
-
+public class GravityConsole : MonoBehaviour {
+	
 	BaseInput input;	
 	PlayerMove player;
 	
 	bool used = false;
 	bool playerNear = false;
 	
-	CameraFollow cameraFollow;
-	
-	public float camHeight = 60.0f;
+	public float camSize = 60.0f;
 	public Transform camAnchor;
 	
-	public ShipMove ship;
+	CameraFollow cameraFollow;
 	
+	public GameObject asteroidGrabber;
+	
+	// Use this for initialization
 	void Start () {
+		
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
 		player = GameObject.Find("Player").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
-		
-		if(ship == null)
-			ship = transform.parent.GetComponent<ShipMove>();
-		
+		asteroidGrabber.GetComponent<AsteroidGrabber>();
+	
 	}
 	
+	// Update is called once per frame
 	void Update () {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
@@ -33,17 +34,15 @@ public class PilotsConsole : MonoBehaviour {
 				player.UsingDevice = !player.UsingDevice;
 				if(used)
 				{
-					
-					cameraFollow.ChangeCam(camAnchor, camHeight);
+					cameraFollow.ChangeCam(camAnchor, camSize);
+					Debug.Log ("Gravity Console Entered");
 				}
-				else {
+				else
+				{
 					cameraFollow.Reset();
-					ship.Move(Vector3.zero);
+					Debug.Log ("Gravity Console Exited");
 				}
 			}
-		}
-		if(used) {
-			ship.Move(input.dir);
 		}
 	}
 	
@@ -60,14 +59,11 @@ public class PilotsConsole : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		if(!used) {
-			if(playerNear) {
-				GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");
-			}
+		if(playerNear) {
+			GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");
 		}
-		
 		if(used)  {
-			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "'WASD' to move");
+			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "Use ASWD to move the gravity field");
 		}
 	}
 }

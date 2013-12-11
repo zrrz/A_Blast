@@ -26,7 +26,7 @@ public class Turret : MonoBehaviour {
 	
 	public float maxRotation, minRotation;
 	
-	public float camSize = 15.0f;
+	public float camSize = 20.0f;
 	public Transform camAnchor;
 	
 	void Start () {

@@ -13,15 +13,35 @@ public class Shields : MonoBehaviour {
 	public GameObject[] tempBarList;
 	
 	public int freeBars = 0;
-	public int activeRightBars = 2;
-	public int activeLeftBars = 2;
-	public int activeTopBars = 2;
-	public int activeBottomBars = 2;
+	
+	public int tempIndex;
+	
+	public int totalBars = 12;
 	
 	// Use this for initialization
 	void Start () {
 		tempBarList = GameObject.FindGameObjectsWithTag("ShieldBar");
 		m_position = transform.position;
+		
+		foreach(GameObject bar in RightBarList)
+		{
+			bar.GetComponent<ShieldBar>().currList = RightBarList;
+		}
+		
+		foreach(GameObject bar in LeftBarList)
+		{
+			bar.GetComponent<ShieldBar>().currList = LeftBarList;
+		}
+		
+		foreach(GameObject bar in TopBarList)
+		{
+			bar.GetComponent<ShieldBar>().currList = TopBarList;
+		}
+		
+		foreach(GameObject bar in BottomBarList)
+		{
+			bar.GetComponent<ShieldBar>().currList = BottomBarList;
+		}
 		
 	}
 	
@@ -31,39 +51,35 @@ public class Shields : MonoBehaviour {
 		{
 			if(Input.GetKeyDown(KeyCode.RightArrow))
 			{
-				if(activeRightBars < 3 && freeBars > 0)
-				{
-					RightBarList[activeRightBars].SetActive(true);
-					freeBars--;
-					activeRightBars++;
-				}
+				AddBar(RightBarList);
+					//RightBarList[rightBarIndex].SetActive(true);
+					//freeBars--;
+					//rightBarIndex++;
+					//activeRightBars++;
 			}
 			else if(Input.GetKeyDown(KeyCode.LeftArrow))
 			{
-				if(activeLeftBars < 3 && freeBars > 0)
-				{
-					LeftBarList[activeLeftBars].SetActive(true);
-					freeBars--;
-					activeLeftBars++;
-				}
+				AddBar(LeftBarList);
+					//LeftBarList[leftBarIndex].SetActive(true);
+					//freeBars--;
+					//leftBarIndex++;
+					//activeLeftBars++;
 			}
 			else if(Input.GetKeyDown(KeyCode.UpArrow))
 			{
-				if(activeTopBars < 3 && freeBars > 0)
-				{
-					TopBarList[activeTopBars].SetActive(true);
-					freeBars--;
-					activeTopBars++;
-				}
+				AddBar(TopBarList);
+					//TopBarList[topBarIndex].SetActive(true);
+					//freeBars--;
+				//	topBarIndex++;
+				//	activeTopBars++;
 			}
 			else if(Input.GetKeyDown(KeyCode.DownArrow))
 			{
-				if(activeBottomBars < 3 && freeBars > 0)
-				{
-					BottomBarList[activeBottomBars].SetActive(true);
-					freeBars--;
-					activeBottomBars++;
-				}
+					AddBar(BottomBarList);
+					//BottomBarList[bottomBarIndex].SetActive(true);
+					//freeBars--;
+					//bottomBarIndex++;
+					//activeBottomBars++;
 			}
 		}
 		
@@ -71,45 +87,81 @@ public class Shields : MonoBehaviour {
 		{
 			if(Input.GetKeyDown(KeyCode.RightArrow))
 			{
-				if(RightBarList.Count > 0)
-				{
-					RightBarList[activeRightBars-1].SetActive(false);
-					freeBars++;
-					activeRightBars--;
-				}
+				RemoveToFreeBar(RightBarList);
+					//RightBarList[rightBarIndex].SetActive(false);
 			}
 			else if(Input.GetKeyDown(KeyCode.LeftArrow))
 			{
-				if(LeftBarList.Count > 0)
-				{
-					LeftBarList[activeLeftBars-1].SetActive(false);
-					freeBars++;
-					activeLeftBars--;
-				}
+				RemoveToFreeBar(LeftBarList);
+					//LeftBarList[leftBarIndex].SetActive(false);
 			}
 			else if(Input.GetKeyDown(KeyCode.UpArrow))
 			{
-				if(TopBarList.Count > 0)
-				{
-					TopBarList[activeTopBars-1].SetActive(false);
-					freeBars++;
-					activeTopBars--;
-				}
+				RemoveToFreeBar(TopBarList);
+					//TopBarList[topBarIndex].SetActive(false);
 			}
 			else if(Input.GetKeyDown(KeyCode.DownArrow))
 			{
-				if(BottomBarList.Count > 0)
-				{
-					BottomBarList[activeBottomBars-1].SetActive(false);
-					freeBars++;
-					activeBottomBars--;
-				}
+					//RemoveToFreeBar(BottomBarList, bottomBarIndex);
+				RemoveToFreeBar(BottomBarList);
+					//BottomBarList[bottomBarIndex].SetActive(false);
 			}
+		}
+	}
+	
+	public int FindActiveIndex(List<GameObject> tlist)
+	{
+		int newIndex =0;
+		foreach(GameObject bar in tlist)
+		{
+			if(bar.activeSelf == true)
+				newIndex++;
+		}
+		Debug.Log (newIndex);
+		
+		return newIndex -1;
+	}
+	
+	void AddBar( List<GameObject> templist)
+	{
+		int index = FindActiveIndex(templist);
+		index++;
+		if(index < 3 && freeBars > 0)
+		{
+			Debug.Log ("add bar index: " + index);
+			templist[index].SetActive(true);
+			freeBars--;
+			totalBars++;
+		}
+	}
+	
+	public void RemoveBar( List<GameObject> templist)
+	{
+		int index = FindActiveIndex(templist);
+		Debug.Log ("remove bar index: " + index);
+		if(index > 0)
+		{
+			totalBars--;
+			templist[index].SetActive(false);
+			
+		}
+	}
+	
+	public void RemoveToFreeBar( List<GameObject> templist)
+	{
+		int index = FindActiveIndex(templist);
+		Debug.Log ("remove bar index: " + index);
+		if(index > 0)
+		{
+			freeBars++;
+			totalBars--;
+			templist[index].SetActive(false);
 		}
 	}
 	
 	void OnGUI()
 	{
-		GUI.Label(new Rect(40,40,50,200), "Free Bars = " + freeBars);
+		GUI.Label(new Rect(40,40,50,200), "Total Shields left = " + totalBars);
+		GUI.Label(new Rect(40,100,50,200), "Unused Bars = " + freeBars);
 	}
 }

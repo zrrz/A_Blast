@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
-
-	public float startSize;
 	
 	public Transform player;
 	
@@ -18,6 +16,12 @@ public class CameraFollow : MonoBehaviour {
 	
 	Transform target;
 	
+	public float camHeightDistance;
+	public float distanceHeightMin = 20;
+	public float distanceHeightMax = 80;
+	public float m_zoomSpeed = 2;
+	
+	public float startHeight = 30.0f;
 	float targetSize;
 	
 	void Start () {
@@ -35,7 +39,13 @@ public class CameraFollow : MonoBehaviour {
 	}
 	
 	void Update () {
-		thisTransform.position = Vector3.Lerp(thisTransform.position, target.position + (Vector3.up*20.0f), Time.deltaTime*3.0f);
+		
+		float currAxis = Input.GetAxis("Mouse ScrollWheel");
+		
+        camHeightDistance -= currAxis * m_zoomSpeed;
+		camHeightDistance = Mathf.Clamp(camHeightDistance, distanceHeightMin, distanceHeightMax);
+		
+		thisTransform.position = Vector3.Lerp(thisTransform.position, target.position + (Vector3.up*camHeightDistance), Time.deltaTime*3.0f);
 	//	if(Mathf.Abs(thisCamera.orthographicSize - targetSize) > 0.1f) {
 	//		thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize)*0.1f;
 	//	}
@@ -45,13 +55,13 @@ public class CameraFollow : MonoBehaviour {
 		thisTransform.eulerAngles = new Vector3(90.0f, -OutsideShip.eulerAngles.y, 0.0f);
 	}
 	
-	public void ChangeCam(Transform setTarget, float setSize) {
-		targetSize = setSize;
+	public void ChangeCam(Transform setTarget, float setHeight) {
+		camHeightDistance = setHeight;
 		target = setTarget;
 	}
 	
 	public void Reset() {
-		targetSize = startSize;
+		camHeightDistance = startHeight;
 		target = player;
 	}
 }

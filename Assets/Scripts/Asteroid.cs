@@ -23,4 +23,13 @@ public class Asteroid : MonoBehaviour {
 		}
 		
 	}
+	
+	void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.tag == "PlayerShip")
+		{
+			gameObject.SetActive(false);
+			collision.gameObject.GetComponent<Health>().m_health -= 20;
+		}
+	}
 }
