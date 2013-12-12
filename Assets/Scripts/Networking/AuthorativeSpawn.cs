@@ -30,7 +30,7 @@ public class AuthorativeSpawn : MonoBehaviour {
 			newPlayerTransform = (Transform)Network.Instantiate(playerPrefab, spawnPoints[1].position, transform.rotation, playerNumber);
 		}
 		//playerScripts.Add(newPlayerTransform.GetComponent<CubeMoveAuthoritative>());
-		if(!networkView.isMine) {
+		if(!newPlayerTransform.networkView.isMine) {
 			newPlayerTransform.gameObject.GetComponent<PlayerMove>().enabled = false;
 			newPlayerTransform.gameObject.GetComponent<PlayerInput>().enabled = false;
 		}
