@@ -170,11 +170,13 @@ public class GravityConsole : MonoBehaviour {
 		else if(used && asteroidsGrabbedList.Count > 0)
 			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 400.0f, 40.0f), "Press ASDW to add force in that direction and release space!!");
 	}
+	
 	/*
 	bool boundsCheck()
 	{
-		//if(
-			//Vector3.Distance(asteroidGrabber.transform.position.x, transform.position) >
+		
+		if(Vector3.Distance(m_position, asteroidGrabber.transform.position) >
 	}
 	*/
+	
 }
