@@ -13,12 +13,12 @@ public class Turret : MonoBehaviour {
 	bool playerNear = false;
 	
 	public GameObject bullet;
-	
 	public float shootCD = 0.6f;
-	
 	float shootTimer = 0.0f;
 	
 	public Transform shootPoint;
+	
+	Transform shipCraft;
 	
 	CameraFollow cameraFollow;
 	
@@ -37,6 +37,8 @@ public class Turret : MonoBehaviour {
 		
 		if(shootPoint == null)
 			shootPoint = thisTransform.FindChild("shootPoint");
+		
+		shipCraft = GameObject.Find("ShipCraft").transform;
 			
 	}
 	
@@ -73,10 +75,21 @@ public class Turret : MonoBehaviour {
 			if(input.fire) {
 				if(shootTimer <= 0.0f) {
 					shootTimer = shootCD;
-					Instantiate(bullet, shootPoint.position, thisTransform.rotation);
+					Shoot();
 				}
 			}
 		}		
+	}
+	
+	void Shoot() {
+		Vector3 shootPointOffset = shootPoint.position - transform.position;
+		Vector3 turretOffset = transform.position - transform.parent.position;
+		Vector3 shipOffset = shipCraft.position - transform.parent.position;
+		Vector3 offset = shootPoint.position + shipOffset + turretOffset + shootPointOffset;
+		
+		Quaternion rotation = Quaternion.Euler(thisTransform.rotation.eulerAngles + shipCraft.rotation.eulerAngles);
+		
+		Instantiate(bullet, offset, rotation);
 	}
 	
 	void OnTriggerEnter(Collider other) {
