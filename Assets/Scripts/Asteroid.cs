@@ -7,13 +7,7 @@ public class Asteroid : MonoBehaviour {
 	public GameObject boundsMin;
 
 	public float damage = 20.0f;
-
-	// Use this for initialization
-	void Start () {
 	
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		if(transform.position.x <= boundsMin.transform.position.x)
 		{

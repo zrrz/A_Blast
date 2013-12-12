@@ -15,7 +15,7 @@ public class ShipMove : MonoBehaviour {
 	}
 	
 	public void Move(Vector3 dir) {
-		thisTransform.position += new Vector3(0.0f, 0.0f, dir.z) * speed * Time.deltaTime;
+		thisTransform.position += transform.TransformDirection(new Vector3(0.0f, 0.0f, dir.z)) * speed * Time.deltaTime;
 		thisTransform.Rotate(Vector3.up, dir.x * turnSpeed * Time.deltaTime);
 	}
 	
