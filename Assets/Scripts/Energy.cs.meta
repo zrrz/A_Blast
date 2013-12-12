@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: c8cffa0c05b1eb4459bedf2ece18b6f4
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - m_energyBar: {fileID: 2800000, guid: 828218497afa36746bec9ed8d00377e6, type: 3}
+  - m_energyBarHolder: {fileID: 2800000, guid: aa8c4cf39b7427c48bc7e6c28ad73247, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

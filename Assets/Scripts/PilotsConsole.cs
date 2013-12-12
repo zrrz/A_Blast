@@ -11,7 +11,7 @@ public class PilotsConsole : MonoBehaviour {
 	
 	CameraFollow cameraFollow;
 	
-	public float camHeight = 60.0f;
+	public float camHeight = 100.0f;
 	public Transform camAnchor;
 	
 	public ShipMove ship;
