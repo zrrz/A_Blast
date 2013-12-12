@@ -22,8 +22,7 @@ public class PilotsConsole : MonoBehaviour {
 		input = player.GetComponent<PlayerInput>();
 		
 		if(ship == null)
-			ship = transform.parent.GetComponent<ShipMove>();
-		
+			ship = transform.parent.GetComponent<ShipMove>();		
 	}
 	
 	void Update () {
@@ -32,9 +31,8 @@ public class PilotsConsole : MonoBehaviour {
 				used = !used;
 				player.usingDevice = !player.usingDevice;
 				if(used)
-				{
-					
-					cameraFollow.ChangeCam(camAnchor, camHeight);
+				{	
+					cameraFollow.ChangeCam(camAnchor);
 				}
 				else {
 					cameraFollow.Reset();

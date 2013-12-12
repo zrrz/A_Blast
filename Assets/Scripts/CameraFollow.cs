@@ -16,9 +16,9 @@ public class CameraFollow : MonoBehaviour {
 	
 	Transform target;
 	
-	public float camHeightDistance;
-	public float distanceHeightMin = 20;
-	public float distanceHeightMax = 80;
+	//public float camHeightDistance;
+	//public float distanceHeightMin = 20;
+	//public float distanceHeightMax = 80;
 	public float m_zoomSpeed = 2;
 	
 	public float startHeight = 30.0f;
@@ -42,26 +42,27 @@ public class CameraFollow : MonoBehaviour {
 		
 		float currAxis = Input.GetAxis("Mouse ScrollWheel");
 		
-        camHeightDistance -= currAxis * m_zoomSpeed;
-		camHeightDistance = Mathf.Clamp(camHeightDistance, distanceHeightMin, distanceHeightMax);
+        //camHeightDistance -= currAxis * m_zoomSpeed;
+		//camHeightDistance = Mathf.Clamp(camHeightDistance, distanceHeightMin, distanceHeightMax);
 		
-		thisTransform.position = Vector3.Lerp(thisTransform.position, target.position + (Vector3.up*camHeightDistance), Time.deltaTime*3.0f);
-	//	if(Mathf.Abs(thisCamera.orthographicSize - targetSize) > 0.1f) {
-	//		thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize)*0.1f;
-	//	}
+		thisTransform.position = Vector3.Lerp(thisTransform.position, target.position + (Vector3.up*50.0f), Time.deltaTime*3.0f);
+		if(Mathf.Abs(thisCamera.orthographicSize - targetSize) > 0.1f) {
+			thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize)*0.1f;
+		}
 		Vector3 offset = thisTransform.position - InsideShip.position;
 		outsideCamTransform.position = OutsideShip.position + offset;
+		outsideCamera.orthographicSize = thisCamera.orthographicSize;
 		
 		thisTransform.eulerAngles = new Vector3(90.0f, -OutsideShip.eulerAngles.y, 0.0f);
 	}
 	
-	public void ChangeCam(Transform setTarget, float setHeight) {
-		camHeightDistance = setHeight;
+	public void ChangeCam(Transform setTarget) {
+		targetSize =  setTarget.GetComponent<CamAnchor>().height;
 		target = setTarget;
 	}
 	
 	public void Reset() {
-		camHeightDistance = startHeight;
+		targetSize = startHeight;
 		target = player;
 	}
 }

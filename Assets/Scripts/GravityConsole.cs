@@ -46,7 +46,7 @@ public class GravityConsole : MonoBehaviour {
 				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
-					cameraFollow.ChangeCam(camAnchor, camSize);
+					cameraFollow.ChangeCam(camAnchor);
 					Debug.Log ("Gravity Console Entered");
 				}
 				else

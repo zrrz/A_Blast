@@ -47,7 +47,7 @@ public class Turret : MonoBehaviour {
 				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
-					cameraFollow.ChangeCam(camAnchor, camSize);
+					cameraFollow.ChangeCam(camAnchor);
 					Debug.Log ("GunTurret Entered");
 				}
 				else

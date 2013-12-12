@@ -31,7 +31,7 @@ public class ShieldConsole : MonoBehaviour {
 				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
-					cameraFollow.ChangeCam(camAnchor, camSize);
+					cameraFollow.ChangeCam(camAnchor);
 					Debug.Log ("Shield Console Entered");
 				}
 				else
