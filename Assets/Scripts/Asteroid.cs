@@ -5,7 +5,9 @@ public class Asteroid : MonoBehaviour {
 	
 	public GameObject boundsMax;
 	public GameObject boundsMin;
-	
+
+	public float damage = 20.0f;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -26,10 +28,7 @@ public class Asteroid : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision)
 	{
-		if(collision.gameObject.tag == "PlayerShip")
-		{
-			gameObject.SetActive(false);
-			collision.gameObject.GetComponent<Health>().m_health -= 20;
-		}
+		collision.gameObject.SendMessage ("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+		gameObject.SetActive(false);
 	}
 }
