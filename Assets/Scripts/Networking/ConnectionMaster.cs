@@ -5,17 +5,22 @@ public class ConnectionMaster : MonoBehaviour {
 
 	void Start() {
 		DontDestroyOnLoad (gameObject);
+		Application.runInBackground = true;
 	}
 
 	public int connectionPort = 25001;
-	
+
+	string ip = "127.0.0.1";
+
 	void OnGUI() {
 		if(Network.peerType == NetworkPeerType.Disconnected) {
 			GUI.Label(new Rect(10.0f, 10.0f, 200.0f, 20.0f), "Status: Disconnected");
-			string ip = GUI.TextArea(new Rect(10.0f, 30.0f, 100.0f, 20.0f), "127.0.0.1");
+			ip = GUI.TextArea(new Rect(10.0f, 30.0f, 100.0f, 20.0f), ip);
 			if(GUI.Button(new Rect(10.0f, 50.0f, 120.0f, 20.0f), "Client Connect")) {
-				Network.Connect(ip, connectionPort);
-				Application.LoadLevel("Main");
+				NetworkConnectionError error = Network.Connect(ip, connectionPort);
+				print(error.ToString());
+				//if(Network.connections.Length > 0)
+					Application.LoadLevel("Main");
 			}
 			if(GUI.Button(new Rect(10.0f, 70.0f, 120.0f, 20.0f), "Initialize Server")) {
 				Network.InitializeServer(32, connectionPort, false);
