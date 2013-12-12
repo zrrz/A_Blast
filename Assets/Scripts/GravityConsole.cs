@@ -148,8 +148,10 @@ public class GravityConsole : MonoBehaviour {
 		if(playerNear) {
 			GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");
 		}
-		if(used)  {
-			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "Use ASWD to move the gravity field");
+		if(used && asteroidsGrabbedList.Count < 1)  {
+			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 350.0f, 40.0f), "Use ASWD to move the gravity field");
 		}
+		else if(used && asteroidsGrabbedList.Count > 0)
+			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 400.0f, 40.0f), "Press ASDW to add force in that direction and release space!!");
 	}
 }
