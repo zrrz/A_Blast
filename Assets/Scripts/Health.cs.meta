@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 6d0019b45026e4a939168e484d6953a6
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_healthBar: {fileID: 2800000, guid: f359a3dbfa850054da1648db18488400, type: 3}
+  - m_healthBarHolder: {fileID: 2800000, guid: aa8c4cf39b7427c48bc7e6c28ad73247, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
