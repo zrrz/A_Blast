@@ -69,24 +69,24 @@ public class ShieldConsole : MonoBehaviour {
 		}
 		if(used) {
 			if(!Input.GetKey(KeyCode.Space)) {
-				if(Input.GetKeyDown(KeyCode.RightArrow))
+				if(Input.GetKeyDown(KeyCode.D))
 					AddBar(RightBarList);
-				else if(Input.GetKeyDown(KeyCode.LeftArrow))
+				else if(Input.GetKeyDown(KeyCode.A))
 					AddBar(LeftBarList);
-				else if(Input.GetKeyDown(KeyCode.UpArrow))
+				else if(Input.GetKeyDown(KeyCode.W))
 					AddBar(TopBarList);
-				else if(Input.GetKeyDown(KeyCode.DownArrow))
+				else if(Input.GetKeyDown(KeyCode.S))
 					AddBar(BottomBarList);
 			}
 			
 			if(Input.GetKey(KeyCode.Space)) {
-				if(Input.GetKeyDown(KeyCode.RightArrow))
+				if(Input.GetKeyDown(KeyCode.D))
 					RemoveToFreeBar(RightBarList);
-				else if(Input.GetKeyDown(KeyCode.LeftArrow))
+				else if(Input.GetKeyDown(KeyCode.A))
 					RemoveToFreeBar(LeftBarList);
-				else if(Input.GetKeyDown(KeyCode.UpArrow))
+				else if(Input.GetKeyDown(KeyCode.W))
 					RemoveToFreeBar(TopBarList);
-				else if(Input.GetKeyDown(KeyCode.DownArrow))
+				else if(Input.GetKeyDown(KeyCode.S))
 					RemoveToFreeBar(BottomBarList);
 			}
 		}
@@ -115,7 +115,7 @@ public class ShieldConsole : MonoBehaviour {
 	
 	public void RemoveBar( List<GameObject> templist) {
 		int index = FindActiveIndex(templist);
-		if(index > 0)
+		if(index >= 0)
 		{
 			totalBars--;
 			templist[index].SetActive(false);
@@ -125,7 +125,7 @@ public class ShieldConsole : MonoBehaviour {
 	
 	public void RemoveToFreeBar( List<GameObject> templist) {
 		int index = FindActiveIndex(templist);
-		if(index > 0)
+		if(index >= 0)
 		{
 			freeBars++;
 			totalBars--;

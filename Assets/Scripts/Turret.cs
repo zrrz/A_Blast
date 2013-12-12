@@ -82,10 +82,8 @@ public class Turret : MonoBehaviour {
 	}
 	
 	void Shoot() {
-		Vector3 shootPointOffset = shootPoint.position - transform.position;
-		Vector3 turretOffset = transform.position - transform.parent.position;
 		Vector3 shipOffset = shipCraft.position - transform.parent.position;
-		Vector3 offset = shootPoint.position + shipOffset + turretOffset + shootPointOffset;
+		Vector3 offset = shootPoint.position + shipOffset;
 		
 		Quaternion rotation = Quaternion.Euler(thisTransform.rotation.eulerAngles + shipCraft.rotation.eulerAngles);
 		
