@@ -9,24 +9,13 @@ public class AuthorativeSpawn : MonoBehaviour {
 	public List<CubeMoveAuthoritative> playerScripts = new List<CubeMoveAuthoritative>();
 
 	public Transform[] spawnPoints;
-	
-	//void OnServerInitialized() {
-	//	SpawnPlayer(Network.player);
-	//}
-	
+
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
-		//if(Network.isServer) {
 			Application.LoadLevel("Server");
-		//} else {
-			
-		//}
 	}
 	
-	//void OnPlayerConnected(NetworkPlayer player) {
-	//	SpawnPlayer(player);
-	//}
-
 	void OnLevelWasLoaded(int level) {
+
 		SpawnPlayer (Network.player);
 	}
 	
@@ -34,8 +23,17 @@ public class AuthorativeSpawn : MonoBehaviour {
 		string tempPlayerString = player.ToString();
 		int playerNumber =  Convert.ToInt32(tempPlayerString);
 
-		Transform newPlayerTransform = (Transform)Network.Instantiate(playerPrefab, spawnPoints[playerNumber].position, transform.rotation, playerNumber);
-		playerScripts.Add(newPlayerTransform.GetComponent<CubeMoveAuthoritative>());	
+		Transform newPlayerTransform = null;
+		if(Network.isServer) {
+			newPlayerTransform = (Transform)Network.Instantiate(playerPrefab, spawnPoints[0].position, transform.rotation, playerNumber);
+		} else if(Network.isClient) {
+			newPlayerTransform = (Transform)Network.Instantiate(playerPrefab, spawnPoints[1].position, transform.rotation, playerNumber);
+		}
+		//playerScripts.Add(newPlayerTransform.GetComponent<CubeMoveAuthoritative>());
+		if(!networkView.isMine) {
+			newPlayerTransform.gameObject.GetComponent<PlayerMove>().enabled = false;
+			newPlayerTransform.gameObject.GetComponent<PlayerInput>().enabled = false;
+		}
 	
 		NetworkView theNetworkView = newPlayerTransform.networkView;
 		//theNetworkView.RPC("SetPlayer", RPCMode.AllBuffered, player);
