@@ -14,13 +14,17 @@ public class ShieldBar : MonoBehaviour {
 	void Update () {
 	
 	}
-	void OnCollisionEnter(Collision collision)
-	{
-		if(collision.gameObject.tag == "Asteroid")
-		{
-			Debug.Log ("hit shield " + gameObject.name);
-			collision.gameObject.SetActive(false);
-			gameObject.transform.parent.GetComponent<Shields>().RemoveBar(currList);
-		}
+	//void OnCollisionEnter(Collision collision)
+	//{
+	//	if(collision.gameObject.tag == "Asteroid")
+	//	{
+	//		Debug.Log ("hit shield " + gameObject.name);
+	//		collision.gameObject.SetActive(false);
+	//
+	//	}
+	//}
+
+	void TakeDamage(float damage) {
+		gameObject.transform.parent.GetComponent<Shields>().RemoveBar(currList);
 	}
 }

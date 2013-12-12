@@ -14,4 +14,8 @@ public class Health : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void TakeDamage(float damage) {
+		m_health -= (int)damage;
+	}
 }

@@ -30,7 +30,7 @@ public class PilotsConsole : MonoBehaviour {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.UsingDevice = !player.UsingDevice;
+				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
 					

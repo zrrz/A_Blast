@@ -38,7 +38,7 @@ public class GravityConsole : MonoBehaviour {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.UsingDevice = !player.UsingDevice;
+				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
 					cameraFollow.ChangeCam(camAnchor, camSize);

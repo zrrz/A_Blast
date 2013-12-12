@@ -31,7 +31,7 @@ public class ShipMove : MonoBehaviour {
 		velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
 		thisRigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 		
-		thisRigidbody.angularVelocity = Vector3.zero;
+		//thisRigidbody.angularVelocity = Vector3.zero;
 		
 		//Vector3 angularVelocityChange = targetAngularVelocity - thisRigidbody.angularVelocity;
 		//angularVelocityChange.y = Mathf.Clamp(angularVelocityChange.y, -maxAngularVelocityChange, maxAngularVelocityChange);

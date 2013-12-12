@@ -44,7 +44,7 @@ public class Turret : MonoBehaviour {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.UsingDevice = !player.UsingDevice;
+				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
 					cameraFollow.ChangeCam(camAnchor, camSize);
@@ -70,7 +70,7 @@ public class Turret : MonoBehaviour {
 			if(thisTransform.eulerAngles.y > maxRotation) {
 				thisTransform.rotation = Quaternion.Euler(0.0f, maxRotation, 0.0f);
 			}
-			if(input.button1) {
+			if(input.fire) {
 				if(shootTimer <= 0.0f) {
 					shootTimer = shootCD;
 					Instantiate(bullet, shootPoint.position, thisTransform.rotation);
