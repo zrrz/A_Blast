@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision)
 	{
-		collision.gameObject.SendMessage ("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+		collision.gameObject.BroadcastMessage ("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
 		gameObject.SetActive(false);
 		//if(collision.gameObject.tag == "PlayerShip")
 		//{
