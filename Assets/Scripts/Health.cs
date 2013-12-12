@@ -16,7 +16,8 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(m_health <= 0)
+			Application.LoadLevel("Lose");
 	}
 
 	void TakeDamage(float damage) {
