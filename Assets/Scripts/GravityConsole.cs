@@ -16,6 +16,11 @@ public class GravityConsole : MonoBehaviour {
 	public Vector3 m_position;
 	public Vector3 newforce;
 	public int maxForce = 2500;
+	public float inflation = 1.0f;
+	public float minInflation = 1.0f;
+	public float maxInflation = 3.0f;
+	
+	public float moveRadius = 30.0f;
 	
 	CameraFollow cameraFollow;
 	
@@ -73,9 +78,13 @@ public class GravityConsole : MonoBehaviour {
 				{
 					m_position += new Vector3(0,0,-4);
 				}
+				if(Input.GetKeyDown(KeyCode.N))
+				{
+					asteroidGrabber.GetComponent<AsteroidTest>().IncreaseScale(1.0f);
+				}
 				if(Input.GetKeyDown(KeyCode.Space))
 				{
-					Collider[] collisions = Physics.OverlapSphere(asteroidGrabber.transform.position, ((SphereCollider)asteroidGrabber.collider).radius * asteroidGrabber.transform.localScale.x);
+					Collider[] collisions = Physics.OverlapSphere(asteroidGrabber.transform.position, ((SphereCollider)asteroidGrabber.collider).radius * asteroidGrabber.transform.localScale.x + 1);
 					foreach(Collider C in collisions)
 					{
 						if(C.gameObject.tag == "Asteroid")
@@ -130,6 +139,12 @@ public class GravityConsole : MonoBehaviour {
 			if(asteroidsGrabbedList.Count < 1)
 				asteroidGrabber.transform.position = Vector3.Lerp(asteroidGrabber.transform.position,m_position, Time.deltaTime);
 		}
+		/*
+		if(inflation > 1.0f)
+			inflation -= Time.deltaTime;
+		else
+			Mathf.Clamp(inflation, minInflation, maxInflation);
+			*/
 	}
 	
 	void OnTriggerEnter(Collider other) {
@@ -149,9 +164,17 @@ public class GravityConsole : MonoBehaviour {
 			GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");
 		}
 		if(used && asteroidsGrabbedList.Count < 1)  {
-			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 350.0f, 40.0f), "Use ASWD to move the gravity field");
+			GUI.Box(new Rect(0.0f, Screen.height - 80.0f, 350.0f, 40.0f), "Use ASWD to move the gravity field");
+			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 350.0f, 40.0f), "Press N to increase the radius for " +  " energy");
 		}
 		else if(used && asteroidsGrabbedList.Count > 0)
 			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 400.0f, 40.0f), "Press ASDW to add force in that direction and release space!!");
 	}
+	/*
+	bool boundsCheck()
+	{
+		//if(
+			//Vector3.Distance(asteroidGrabber.transform.position.x, transform.position) >
+	}
+	*/
 }
