@@ -10,7 +10,7 @@ public class ShieldConsole : MonoBehaviour {
 	bool used = false;
 	bool playerNear = false;
 	
-	public float camSize = 60.0f;
+	public float camSize = 80.0f;
 	public Transform camAnchor;
 	
 	CameraFollow cameraFollow;

@@ -16,11 +16,17 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(m_health <= 0)
+			Application.LoadLevel("Lose");
 	}
 
 	void TakeDamage(float damage) {
 		m_health -= (int)damage;
+	}
+
+	void OnTiggerEnter (Collider col) {
+		if(col.tag == "EnemyBullet") 
+			m_health -= (int)col.GetComponent<Bullet>().damage;
 	}
 	
 	void OnGUI () {

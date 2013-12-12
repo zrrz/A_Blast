@@ -68,19 +68,19 @@ public class GravityConsole : MonoBehaviour {
 				Vector3 dirToAdd = Vector3.zero;
 				if(Input.GetKey(KeyCode.A))
 				{
-					dirToAdd += new Vector3(-4,0,0);
+					dirToAdd += new Vector3(-3,0,0);
 				}
 				if(Input.GetKey(KeyCode.D))
 				{
-					dirToAdd += new Vector3(4,0,0);
+					dirToAdd += new Vector3(3,0,0);
 				}
 				if(Input.GetKey(KeyCode.W))
 				{
-					dirToAdd += new Vector3(0,0,4);
+					dirToAdd += new Vector3(0,0,3);
 				}
 				if(Input.GetKey(KeyCode.S))
 				{
-					dirToAdd += new Vector3(0,0,-4);
+					dirToAdd += new Vector3(0,0,-3);
 				}
 				if(Vector3.Distance(asteroidGrabber.gameObject.transform.position + dirToAdd, shipCenter.position) < maxGrabberDistance) {
 					m_position += dirToAdd;
@@ -88,6 +88,8 @@ public class GravityConsole : MonoBehaviour {
 				if(Input.GetKeyDown(KeyCode.N))
 				{
 					asteroidGrabber.GetComponent<AsteroidTest>().IncreaseScale(1.0f);
+					if(asteroidGrabber.transform.parent.GetComponent<Energy>().m_energy > 15.0f)
+						asteroidGrabber.transform.parent.GetComponent<Energy>().ReduceEnergy(15.0f);
 				}
 				if(Input.GetKeyDown(KeyCode.Space))
 				{
