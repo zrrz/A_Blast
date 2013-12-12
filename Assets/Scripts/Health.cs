@@ -22,6 +22,11 @@ public class Health : MonoBehaviour {
 	void TakeDamage(float damage) {
 		m_health -= (int)damage;
 	}
+
+	void OnTiggerEnter (Collider col) {
+		if(col.tag == "EnemyBullet") 
+			m_health -= (int)col.GetComponent<Bullet>().damage;
+	}
 	
 	void OnGUI () {
 		float x = Screen.width * 0.5f;
