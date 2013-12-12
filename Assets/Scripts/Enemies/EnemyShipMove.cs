@@ -22,12 +22,17 @@ public class EnemyShipMove : MonoBehaviour {
 	public float shootCD = 2.0f;
 
 	public GameObject bullet;
+
+	public Texture healthBar;
+	Camera cam;
+	Vector3 offset = new Vector3(0.0f, 1.0f, 3.0f);
 	
 	void Start () {
 		health = maxHealth;
 		thisTransform = transform;
 		input = GetComponent<BaseInput>();
 		characterController = GetComponent<CharacterController>();
+		cam = GameObject.Find("Camera").GetComponent<Camera>();
 	}
 	
 	void Update () {
@@ -47,5 +52,15 @@ public class EnemyShipMove : MonoBehaviour {
 		if(health <= 0) {
 			Destroy(gameObject);
 		}
+	}
+
+	void OnGUI () {
+		Vector3 pos = cam.WorldToScreenPoint(transform.position + offset);
+
+		float width = Screen.width * 0.07f;
+		float height = Screen.height * 0.01f;
+
+		float hp = health / maxHealth;
+		GUI.DrawTexture(new Rect(pos.x - width*0.4f, Screen.height - pos.y, width*hp, height), healthBar);
 	}
 }
