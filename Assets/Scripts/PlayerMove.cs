@@ -5,9 +5,7 @@ public class PlayerMove : MonoBehaviour {
 	
 	BaseInput input;
 	
-	//Transform thisTransform;
-	
-	public bool UsingDevice = false;
+	public bool usingDevice = false;
 	
 	public float moveSpeed = 5.0f;
 	
@@ -16,21 +14,19 @@ public class PlayerMove : MonoBehaviour {
 	public float sprintSpeed = 2.5f;
 			
 	void Start () {
-		//thisTransform = transform;
 		input = GetComponent<BaseInput>();
 		characterController = GetComponent<CharacterController>();
 	}
 	
 	void Update () {
-		if(!UsingDevice) {
+		if(!usingDevice) {
 			float speedMod = (input.shift == false) ? 1.0f : sprintSpeed;
 			characterController.Move(input.dir * (moveSpeed + speedMod) * Time.deltaTime);
-			//thisTransform.position += input.dir * moveSpeed * Time.deltaTime;
 		}
 	}
 	
 	void OnGUI() {
-		if(!UsingDevice)  {
+		if(!usingDevice)  {
 			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "Press 'shift' to sprint");
 		}
 	}

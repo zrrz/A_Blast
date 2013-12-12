@@ -5,6 +5,8 @@ public class Bullet : MonoBehaviour {
 	
 	Transform thisTransform;
 	Rigidbody thisRigidbody;
+
+	public float damage = 20.0f;
 	
 	public float speed = 60.0f;
 	
@@ -15,7 +17,14 @@ public class Bullet : MonoBehaviour {
 		Destroy(gameObject, 5.0f);
 	}
 	
-	void Update () {
-		
+	void OnCollisionEnter(Collision collision)
+	{
+		collision.gameObject.SendMessage ("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+		gameObject.SetActive(false);
+		//if(collision.gameObject.tag == "PlayerShip")
+		//{
+		//	gameObject.SetActive(false);
+		//	collision.gameObject.GetComponent<Health>().m_health -= 20;
+		//}
 	}
 }

@@ -18,23 +18,21 @@ public class PilotsConsole : MonoBehaviour {
 	
 	void Start () {
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
-		player = GameObject.Find("Player").GetComponent<PlayerMove>();
+		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 		
 		if(ship == null)
-			ship = transform.parent.GetComponent<ShipMove>();
-		
+			ship = transform.parent.GetComponent<ShipMove>();		
 	}
 	
 	void Update () {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.UsingDevice = !player.UsingDevice;
+				player.usingDevice = !player.usingDevice;
 				if(used)
-				{
-					
-					cameraFollow.ChangeCam(camAnchor, camHeight);
+				{	
+					cameraFollow.ChangeCam(camAnchor);
 				}
 				else {
 					cameraFollow.Reset();

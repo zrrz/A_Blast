@@ -21,32 +21,36 @@ public class GravityConsole : MonoBehaviour {
 	public float maxInflation = 3.0f;
 	
 	public float moveRadius = 30.0f;
-	
+
+	public float forceIncreaseAmount = 20.0f;
+
 	CameraFollow cameraFollow;
 	
 	public List<GameObject> asteroidsGrabbedList;
 	public GameObject asteroidGrabber;
-	
-	// Use this for initialization
+
+	Transform shipCenter;
+
+	public float maxGrabberDistance = 60.0f;
+
 	void Start () {
-		
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
-		player = GameObject.Find("Player").GetComponent<PlayerMove>();
+		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 		asteroidGrabber.GetComponent<AsteroidGrabber>();
 		m_position = asteroidGrabber.transform.position;
 	
+		shipCenter = GameObject.FindGameObjectWithTag ("PlayerShip").transform;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.UsingDevice = !player.UsingDevice;
+				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
-					cameraFollow.ChangeCam(camAnchor, camSize);
+					cameraFollow.ChangeCam(camAnchor);
 					Debug.Log ("Gravity Console Entered");
 				}
 				else
@@ -61,22 +65,25 @@ public class GravityConsole : MonoBehaviour {
 		{
 			if(asteroidsGrabbedList.Count == 0)
 			{
-		
+				Vector3 dirToAdd = Vector3.zero;
 				if(Input.GetKey(KeyCode.A))
 				{
-					m_position += new Vector3(-4,0,0);
+					dirToAdd += new Vector3(-4,0,0);
 				}
 				if(Input.GetKey(KeyCode.D))
 				{
-					m_position += new Vector3(4,0,0);
+					dirToAdd += new Vector3(4,0,0);
 				}
 				if(Input.GetKey(KeyCode.W))
 				{
-					m_position += new Vector3(0,0,4);
+					dirToAdd += new Vector3(0,0,4);
 				}
 				if(Input.GetKey(KeyCode.S))
 				{
-					m_position += new Vector3(0,0,-4);
+					dirToAdd += new Vector3(0,0,-4);
+				}
+				if(Vector3.Distance(asteroidGrabber.gameObject.transform.position + dirToAdd, shipCenter.position) < maxGrabberDistance) {
+					m_position += dirToAdd;
 				}
 				if(Input.GetKeyDown(KeyCode.N))
 				{
@@ -101,24 +108,24 @@ public class GravityConsole : MonoBehaviour {
 			{
 				Debug.Log ("adding directional forces: " + newforce);
 				
-				if(Input.GetKeyDown(KeyCode.A))
+				if(Input.GetKey(KeyCode.A))
 				{
-					newforce += new Vector3(-200,0,0);
+					newforce += new Vector3(-forceIncreaseAmount,0,0);
 					Debug.Log ("adding directional forces: " + newforce);
 				}
-				if(Input.GetKeyDown(KeyCode.D))
+				if(Input.GetKey(KeyCode.D))
 				{
-					newforce += new Vector3(200,0,0);
+					newforce += new Vector3(forceIncreaseAmount,0,0);
 					Debug.Log ("adding directional forces: " + newforce);
 				}
-				if(Input.GetKeyDown(KeyCode.W))
+				if(Input.GetKey(KeyCode.W))
 				{
-					newforce += new Vector3(0,0,200);
+					newforce += new Vector3(0,0,forceIncreaseAmount);
 					Debug.Log ("adding directional forces: " + newforce);
 				}
-				if(Input.GetKeyDown(KeyCode.S))
+				if(Input.GetKey(KeyCode.S))
 				{
-					newforce += new Vector3(0,0,-200);
+					newforce += new Vector3(0,0,-forceIncreaseAmount);
 					Debug.Log ("adding directional forces: " + newforce);
 				}
 			}
@@ -170,13 +177,4 @@ public class GravityConsole : MonoBehaviour {
 		else if(used && asteroidsGrabbedList.Count > 0)
 			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 400.0f, 40.0f), "Press ASDW to add force in that direction and release space!!");
 	}
-	
-	/*
-	bool boundsCheck()
-	{
-		
-		if(Vector3.Distance(m_position, asteroidGrabber.transform.position) >
-	}
-	*/
-	
 }

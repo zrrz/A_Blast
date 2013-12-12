@@ -13,12 +13,12 @@ public class Turret : MonoBehaviour {
 	bool playerNear = false;
 	
 	public GameObject bullet;
-	
 	public float shootCD = 0.6f;
-	
 	float shootTimer = 0.0f;
 	
 	public Transform shootPoint;
+	
+	Transform shipCraft;
 	
 	CameraFollow cameraFollow;
 	
@@ -32,11 +32,13 @@ public class Turret : MonoBehaviour {
 	void Start () {
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
 		thisTransform = transform;
-		player = GameObject.Find("Player").GetComponent<PlayerMove>();
+		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 		
 		if(shootPoint == null)
 			shootPoint = thisTransform.FindChild("shootPoint");
+		
+		shipCraft = GameObject.Find("ShipCraft").transform;
 			
 	}
 	
@@ -44,10 +46,10 @@ public class Turret : MonoBehaviour {
 		if(playerNear) {
 			if(Input.GetKeyDown(KeyCode.E)) {
 				used = !used;
-				player.UsingDevice = !player.UsingDevice;
+				player.usingDevice = !player.usingDevice;
 				if(used)
 				{
-					cameraFollow.ChangeCam(camAnchor, camSize);
+					cameraFollow.ChangeCam(camAnchor);
 					Debug.Log ("GunTurret Entered");
 				}
 				else
@@ -70,13 +72,24 @@ public class Turret : MonoBehaviour {
 			if(thisTransform.eulerAngles.y > maxRotation) {
 				thisTransform.rotation = Quaternion.Euler(0.0f, maxRotation, 0.0f);
 			}
-			if(input.button1) {
+			if(input.fire) {
 				if(shootTimer <= 0.0f) {
 					shootTimer = shootCD;
-					Instantiate(bullet, shootPoint.position, thisTransform.rotation);
+					Shoot();
 				}
 			}
 		}		
+	}
+	
+	void Shoot() {
+		Vector3 shootPointOffset = shootPoint.position - transform.position;
+		Vector3 turretOffset = transform.position - transform.parent.position;
+		Vector3 shipOffset = shipCraft.position - transform.parent.position;
+		Vector3 offset = shootPoint.position + shipOffset + turretOffset + shootPointOffset;
+		
+		Quaternion rotation = Quaternion.Euler(thisTransform.rotation.eulerAngles + shipCraft.rotation.eulerAngles);
+		
+		Instantiate(bullet, offset, rotation);
 	}
 	
 	void OnTriggerEnter(Collider other) {

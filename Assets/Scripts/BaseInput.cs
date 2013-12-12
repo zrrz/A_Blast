@@ -4,7 +4,8 @@ using System.Collections;
 public class BaseInput : MonoBehaviour {
 	
 	protected Vector3 _dir;
-	protected bool _button1;
+	protected Vector3 _targetDir;
+	protected bool _fire;
 	protected bool _shift;
 
 	void Start () {
@@ -20,10 +21,16 @@ public class BaseInput : MonoBehaviour {
 			return _dir;
 		}
 	}
-	
-	public bool button1 {
+
+	public Vector3 targetDir {
 		get {
-			return _button1;
+			return _targetDir;
+		}
+	}
+	
+	public bool fire {
+		get {
+			return _fire;
 		}
 	}
 	
