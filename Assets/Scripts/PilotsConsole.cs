@@ -18,7 +18,7 @@ public class PilotsConsole : MonoBehaviour {
 	
 	void Start () {
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
-		player = GameObject.Find("Player").GetComponent<PlayerMove>();
+		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 		
 		if(ship == null)

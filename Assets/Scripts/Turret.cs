@@ -32,7 +32,7 @@ public class Turret : MonoBehaviour {
 	void Start () {
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
 		thisTransform = transform;
-		player = GameObject.Find("Player").GetComponent<PlayerMove>();
+		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 		
 		if(shootPoint == null)

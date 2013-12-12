@@ -31,7 +31,7 @@ public class ShieldConsole : MonoBehaviour {
 
 	void Start () {		
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
-		player = GameObject.Find("Player").GetComponent<PlayerMove>();
+		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 
 		tempBarList = GameObject.FindGameObjectsWithTag("ShieldBar");
@@ -146,8 +146,8 @@ public class ShieldConsole : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		GUI.Label(new Rect(40,40,50,200), "Total Shields left = " + totalBars);
-		GUI.Label(new Rect(40,100,50,200), "Unused Bars = " + freeBars);
+		GUI.Label(new Rect(40,100,50,200), "Total Shields left = " + totalBars);
+		GUI.Label(new Rect(40,160,50,200), "Unused Bars = " + freeBars);
 
 		if(playerNear) {
 			GUI.Box(new Rect(0.0f, 0.0f, 150.0f, 50.0f), "Press 'E' to enter");

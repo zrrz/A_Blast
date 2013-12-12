@@ -31,23 +31,24 @@ public class CameraFollow : MonoBehaviour {
 		thisCamera = camera;
 		thisTransform = transform;
 		if(player == null)
-			player = GameObject.Find("Player").transform;
+			player = GameObject.Find("Player(Clone)").transform;
 		Reset();
 	}
 	
 	void Update () {
-		
-		float currAxis = Input.GetAxis("Mouse ScrollWheel");
-		
-		thisTransform.position = Vector3.Lerp(thisTransform.position, target.position + (Vector3.up*50.0f), Time.deltaTime*3.0f);
-		if(Mathf.Abs(thisCamera.orthographicSize - targetSize) > 0.1f) {
-			thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize)*0.1f;
+		if (player) {
+			float currAxis = Input.GetAxis ("Mouse ScrollWheel");
+
+			thisTransform.position = Vector3.Lerp (thisTransform.position, target.position + (Vector3.up * 50.0f), Time.deltaTime * 3.0f);
+			if (Mathf.Abs (thisCamera.orthographicSize - targetSize) > 0.1f) {
+					thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize) * 0.1f;
+			}
+			Vector3 offset = thisTransform.position - InsideShip.position;
+			outsideCamTransform.position = OutsideShip.position + offset;
+			outsideCamera.orthographicSize = thisCamera.orthographicSize;
+
+			thisTransform.eulerAngles = new Vector3 (90.0f, -OutsideShip.eulerAngles.y, 0.0f);
 		}
-		Vector3 offset = thisTransform.position - InsideShip.position;
-		outsideCamTransform.position = OutsideShip.position + offset;
-		outsideCamera.orthographicSize = thisCamera.orthographicSize;
-		
-		thisTransform.eulerAngles = new Vector3(90.0f, -OutsideShip.eulerAngles.y, 0.0f);
 	}
 	
 	public void ChangeCam(Transform setTarget) {
