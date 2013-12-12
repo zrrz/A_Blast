@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GravityConsole : MonoBehaviour {
 	
 	BaseInput input;	
 	PlayerMove player;
 	
-	bool used = false;
+	public bool used = false;
 	bool playerNear = false;
 	
 	public float camSize = 60.0f;
 	public Transform camAnchor;
 	
+	public Vector3 m_position;
+	public Vector3 newforce;
+	public int maxForce = 2500;
+	
 	CameraFollow cameraFollow;
 	
+	public List<GameObject> asteroidsGrabbedList;
 	public GameObject asteroidGrabber;
 	
 	// Use this for initialization
@@ -23,6 +29,7 @@ public class GravityConsole : MonoBehaviour {
 		player = GameObject.Find("Player").GetComponent<PlayerMove>();
 		input = player.GetComponent<PlayerInput>();
 		asteroidGrabber.GetComponent<AsteroidGrabber>();
+		m_position = asteroidGrabber.transform.position;
 	
 	}
 	
@@ -43,6 +50,85 @@ public class GravityConsole : MonoBehaviour {
 					Debug.Log ("Gravity Console Exited");
 				}
 			}
+		}
+		
+		if(used)
+		{
+			if(asteroidsGrabbedList.Count == 0)
+			{
+		
+				if(Input.GetKey(KeyCode.A))
+				{
+					m_position += new Vector3(-4,0,0);
+				}
+				if(Input.GetKey(KeyCode.D))
+				{
+					m_position += new Vector3(4,0,0);
+				}
+				if(Input.GetKey(KeyCode.W))
+				{
+					m_position += new Vector3(0,0,4);
+				}
+				if(Input.GetKey(KeyCode.S))
+				{
+					m_position += new Vector3(0,0,-4);
+				}
+				if(Input.GetKeyDown(KeyCode.Space))
+				{
+					Collider[] collisions = Physics.OverlapSphere(asteroidGrabber.transform.position, ((SphereCollider)asteroidGrabber.collider).radius * asteroidGrabber.transform.localScale.x);
+					foreach(Collider C in collisions)
+					{
+						if(C.gameObject.tag == "Asteroid")
+						{
+							asteroidsGrabbedList.Add(C.gameObject);
+							C.gameObject.rigidbody.velocity = new Vector3(0,0,0);
+							Debug.Log (C.gameObject.rigidbody.velocity);
+						}
+					}
+				}
+			}
+			//direction
+			if(Input.GetKey(KeyCode.Space) && asteroidsGrabbedList.Count > 0)
+			{
+				Debug.Log ("adding directional forces: " + newforce);
+				
+				if(Input.GetKeyDown(KeyCode.A))
+				{
+					newforce += new Vector3(-200,0,0);
+					Debug.Log ("adding directional forces: " + newforce);
+				}
+				if(Input.GetKeyDown(KeyCode.D))
+				{
+					newforce += new Vector3(200,0,0);
+					Debug.Log ("adding directional forces: " + newforce);
+				}
+				if(Input.GetKeyDown(KeyCode.W))
+				{
+					newforce += new Vector3(0,0,200);
+					Debug.Log ("adding directional forces: " + newforce);
+				}
+				if(Input.GetKeyDown(KeyCode.S))
+				{
+					newforce += new Vector3(0,0,-200);
+					Debug.Log ("adding directional forces: " + newforce);
+				}
+			}
+			
+			if(Input.GetKeyUp(KeyCode.Space))
+			{
+				if(newforce.x > maxForce)
+					newforce.x = maxForce;
+				if(newforce.z > maxForce)
+					newforce.z = maxForce;
+				foreach(GameObject asteroid in asteroidsGrabbedList)
+					asteroid.rigidbody.AddForce(newforce);
+				
+				asteroidsGrabbedList.Clear();
+				newforce.Set(0,0,0);
+			}
+			
+			if(asteroidsGrabbedList.Count < 1)
+				asteroidGrabber.transform.position = Vector3.Lerp(asteroidGrabber.transform.position,m_position, Time.deltaTime);
 		}
 	}
 	

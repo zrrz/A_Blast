@@ -24,7 +24,7 @@ public class AsteroidTest : MonoBehaviour {
 				i = 0;
 		}
 		//if(i % 2 == 0)
-		sphere.renderer.material.Lerp(materials[i], baseMaterial, lerp);
+		//sphere.renderer.material.Lerp(materials[i], baseMaterial, lerp);
 		//else
 		//	sphere.renderer.material.Lerp(baseMaterial, materials[i], lerp);
     }

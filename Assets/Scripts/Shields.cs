@@ -117,7 +117,6 @@ public class Shields : MonoBehaviour {
 			if(bar.activeSelf == true)
 				newIndex++;
 		}
-		Debug.Log (newIndex);
 		
 		return newIndex -1;
 	}
@@ -128,7 +127,6 @@ public class Shields : MonoBehaviour {
 		index++;
 		if(index < 3 && freeBars > 0)
 		{
-			Debug.Log ("add bar index: " + index);
 			templist[index].SetActive(true);
 			freeBars--;
 			totalBars++;
@@ -138,7 +136,6 @@ public class Shields : MonoBehaviour {
 	public void RemoveBar( List<GameObject> templist)
 	{
 		int index = FindActiveIndex(templist);
-		Debug.Log ("remove bar index: " + index);
 		if(index > 0)
 		{
 			totalBars--;
@@ -150,7 +147,6 @@ public class Shields : MonoBehaviour {
 	public void RemoveToFreeBar( List<GameObject> templist)
 	{
 		int index = FindActiveIndex(templist);
-		Debug.Log ("remove bar index: " + index);
 		if(index > 0)
 		{
 			freeBars++;
