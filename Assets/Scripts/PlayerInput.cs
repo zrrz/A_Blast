@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerInput : BaseInput {
 
 	void Start () {
-	
+
 	}
 
 	void Update () {

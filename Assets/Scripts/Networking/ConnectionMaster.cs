@@ -9,7 +9,7 @@ public class ConnectionMaster : MonoBehaviour {
 
 	string ip = "127.0.0.1";
 
-	private int lastLevelPrefix;
+	private int lastLevelPrefix = 0;
 
 	void Start() {
 		//if(null != instance) {
@@ -25,23 +25,25 @@ public class ConnectionMaster : MonoBehaviour {
 	}
 
 	[RPC]
-	void LoadLevel(string level, int levelPrefix) {
+	IEnumerator LoadLevel(string level, int levelPrefix) {
 		lastLevelPrefix = levelPrefix;
 
 		Network.SetSendingEnabled(0, false);
+		//Network.SetSendingEnabled(1, false);
 
 		Network.isMessageQueueRunning = false;
 
 		Network.SetLevelPrefix(levelPrefix);
 		Application.LoadLevel(level);
-		//yield return null;
-		//yield return null;
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
 
 		Network.isMessageQueueRunning = true;
 		Network.SetSendingEnabled(0, true);
+		//Network.SetSendingEnabled(1, true);
 
 		//foreach(GameObject obj in FindObjectsOfType(typeof(GameObject))) {
-		//	obj.SendMessage("OnNetworkLevelLoaded");
+		//GameObject.Find("PlayerSpawner").SendMessage("OnNetworkLevelLoaded");
 		//}
 	}
 
@@ -54,7 +56,7 @@ public class ConnectionMaster : MonoBehaviour {
 			GUI.Label(new Rect(10.0f, 10.0f, 200.0f, 20.0f), "Status: Disconnected");
 			ip = GUI.TextArea(new Rect(10.0f, 30.0f, 100.0f, 20.0f), ip);
 			if(GUI.Button(new Rect(10.0f, 50.0f, 120.0f, 20.0f), "Client Connect")) {
-				NetworkConnectionError error = Network.Connect(ip, connectionPort);
+				Network.Connect(ip, connectionPort);
 			}
 			if(GUI.Button(new Rect(10.0f, 70.0f, 120.0f, 20.0f), "Initialize Server")) {
 				Network.InitializeServer(32, connectionPort, false);
@@ -73,7 +75,8 @@ public class ConnectionMaster : MonoBehaviour {
 				if(GUI.Button(new Rect(10.0f, 50.0f, 120.0f, 20.0f), "Start")) {
 					Network.RemoveRPCsInGroup(0);
 					Network.RemoveRPCsInGroup(1);
-					networkView.RPC("LoadLevel", RPCMode.AllBuffered, "Main", lastLevelPrefix + 1);
+					networkView.RPC("LoadLevel", RPCMode.AllBuffered, "Main", lastLevelPrefix+1);
+					//StartCoroutine(LoadLevel("Main", lastLevelPrefix+1));
 				}
 			}
 		}
