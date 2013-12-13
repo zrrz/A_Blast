@@ -39,9 +39,7 @@ public class CameraFollow : MonoBehaviour {
 	}
 	
 	void Update () {
-	
 		if (player) {
-
 			float currAxis = Input.GetAxis ("Mouse ScrollWheel");
 			m_heightDistance -= currAxis * m_zoomSpeed;
 			m_heightDistance = Mathf.Clamp(m_heightDistance, m_distanceHeightMin, m_distanceHeightMax);
@@ -49,11 +47,16 @@ public class CameraFollow : MonoBehaviour {
 			thisTransform.position = Vector3.Lerp (thisTransform.position, target.position + (Vector3.up * m_heightDistance), Time.deltaTime * 3.0f);
 
 			if (Mathf.Abs (thisCamera.orthographicSize - targetSize) > 0.1f) {
-					thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize) * 0.1f;
+				thisCamera.orthographicSize += (targetSize - thisCamera.orthographicSize) * 0.1f;
 			}
+
+			outsideCamera.orthographicSize = thisCamera.orthographicSize;
+
+			//Vector3 offset = new Vector3(Mathf.Cos(-OutsideShip.eulerAngles.y), 0.0f, Mathf.Sin (-OutsideShip.eulerAngles.y));
+			//offset.Normalize();
 			Vector3 offset = thisTransform.position - InsideShip.position;
 			outsideCamTransform.position = OutsideShip.position + offset;
-			outsideCamera.orthographicSize = thisCamera.orthographicSize;
+
 
 			thisTransform.eulerAngles = new Vector3 (90.0f, -OutsideShip.eulerAngles.y, 0.0f);
 		}
