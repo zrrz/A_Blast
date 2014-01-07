@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class ConnectionMaster : MonoBehaviour {
+
+	static ConnectionMaster instance;
+
 	public int connectionPort = 25001;
 
 	string ip = "127.0.0.1";
@@ -9,6 +12,13 @@ public class ConnectionMaster : MonoBehaviour {
 	private int lastLevelPrefix = 0;
 
 	void Start() {
+		//if(null != instance) {
+		//	DestroyImmediate(gameObject);
+		//} else {
+		//	instance = this;
+		//	DontDestroyOnLoad (gameObject);
+		//	Application.runInBackground = true;
+		//}
 		networkView.group = 1;
 		DontDestroyOnLoad (gameObject);
 		Application.LoadLevel("Server");
@@ -19,6 +29,7 @@ public class ConnectionMaster : MonoBehaviour {
 		lastLevelPrefix = levelPrefix;
 
 		Network.SetSendingEnabled(0, false);
+		//Network.SetSendingEnabled(1, false);
 
 		Network.isMessageQueueRunning = false;
 
@@ -29,10 +40,11 @@ public class ConnectionMaster : MonoBehaviour {
 
 		Network.isMessageQueueRunning = true;
 		Network.SetSendingEnabled(0, true);
+		//Network.SetSendingEnabled(1, true);
 
-		foreach(GameObject obj in FindObjectsOfType(typeof(GameObject))) {
-			obj.SendMessage("OnNetworkLevelLoaded", SendMessageOptions.DontRequireReceiver);
-		}
+		//foreach(GameObject obj in FindObjectsOfType(typeof(GameObject))) {
+		//GameObject.Find("PlayerSpawner").SendMessage("OnNetworkLevelLoaded");
+		//}
 	}
 
 	void OnDisconnectedFromServer() {
