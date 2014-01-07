@@ -8,6 +8,8 @@ public class BaseInput : MonoBehaviour {
 	protected bool _fire;
 	protected bool _shift;
 
+	public bool getUserInput = false;
+
 	void Start () {
 	
 	}
