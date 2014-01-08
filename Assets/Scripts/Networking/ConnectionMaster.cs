@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class ConnectionMaster : MonoBehaviour {
+
 	public int connectionPort = 25001;
 
 	string ip = "127.0.0.1";

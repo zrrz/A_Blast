@@ -32,7 +32,7 @@ public class ShieldConsole : MonoBehaviour {
 	void Start () {		
 		cameraFollow = Camera.main.GetComponent<CameraFollow>();
 		player = GameObject.Find("Player(Clone)").GetComponent<PlayerMove>();
-		input = player.GetComponent<PlayerInput>();
+		//input = player.GetComponent<PlayerInput>();
 
 		tempBarList = GameObject.FindGameObjectsWithTag("ShieldBar");
 		m_position = transform.position;
@@ -146,6 +146,8 @@ public class ShieldConsole : MonoBehaviour {
 	}
 	
 	void OnGUI() {
+
+
 		GUI.Label(new Rect(40,100,50,200), "Total Shields left = " + totalBars);
 		GUI.Label(new Rect(40,160,50,200), "Unused Bars = " + freeBars);
 
@@ -155,5 +157,7 @@ public class ShieldConsole : MonoBehaviour {
 		if(used)  {
 			GUI.Box(new Rect(0.0f, Screen.height - 40.0f, 150.0f, 40.0f), "Hold space and press an arrow key to remove a bar, press an arrow key to add a bar back");
 		}
+
+	
 	}
 }
