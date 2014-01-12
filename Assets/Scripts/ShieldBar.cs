@@ -8,7 +8,7 @@ public class ShieldBar : MonoBehaviour {
 	ShieldConsole console; 
 
 	void Start () {
-		console = GameObject.Find ("ShieldConsole").GetComponent<ShieldConsole>();
+		//console = GameObject.Find ("ShieldConsole").GetComponent<ShieldConsole>();
 	}
 
 	void Update () {
